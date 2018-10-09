@@ -1,6 +1,8 @@
 package com.capgemini.ordersapp;
 
+
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,7 +64,7 @@ public class OrderControllerTest
 	@Test 
 	public void testGetOrdersbyId() throws Exception {
 		when(orderService.getOrderById(1234)).thenReturn(new Orders(1234,"toy"));
-		mockMvc.perform(get("/orders/1234"))
+		mockMvc.perform(get("/order/1234"))
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.orderId").exists())
 		.andExpect(jsonPath("$.orderName").exists())
@@ -72,8 +74,11 @@ public class OrderControllerTest
 		   
 	}
 	
-	/*@Test
+     @Test
 	public void testDeleteOrderbyId() throws Exception {
-		when(orderService.deleteOrderById(1234)).thenReturn(new Orders)
-	}*/
+    	// when(orderService.getOrderById(1234)).thenReturn(new Orders(1234,"toy"));
+		mockMvc.perform(delete("/order/1234").accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andDo(print());
+	}
 }
